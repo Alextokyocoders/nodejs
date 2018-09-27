@@ -9,23 +9,11 @@
       "id": "RKUMDV5Uf"
     },
     {
-      "name": "hung",
-      "id": "3pkKYtXuE"
-    },
-    {
-      "name": "Son",
-      "phone": "14224554",
-      "id": "cAsjc6_gR"
-    },
-    {
-      "name": "Son",
-      "phone": "4141242134",
-      "id": "OpXbJaZoK"
-    },
-    {
       "name": "nguyenvanson",
       "phone": "432454123125",
-      "id": "_uNw1VP6s"
+      "id": "_uNw1VP6s",
+      "email": "khraxo95@gmail.com",
+      "password": "e10adc3949ba59abbe56e057f20f883e"
     }
   ]
 }
