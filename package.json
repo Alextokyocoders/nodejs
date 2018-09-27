@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parse": "^0.1.0",
+    "cookie-parser": "^1.4.3",
     "express": "^4.16.3",
     "jstransformer-highlight": "^2.0.0",
     "lowdb": "^1.0.0",
