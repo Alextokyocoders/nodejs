@@ -1,6 +1,6 @@
 var express = require('express');
 
-var controller = require('../controllers/reviews.controller');
+var controller = require('../controllers/products.controller');
 
 var router = express.Router();
 

@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 
 var usersRoute = require('./routes/user.route');
 var authRoute = require('./routes/auth.route');
-var reviewsRoute = require('./routes/reviews.route');
+var productsRoute = require('./routes/products.route');
 
 var authMiddleware = require('./middlewares/auth.middlewares');
 
@@ -31,7 +31,7 @@ app.get('/',function(req, res){
 
 app.use('/users', authMiddleware.requireAuth, usersRoute);
 app.use('/auth', authRoute);
-app.use('/reviews', reviewsRoute);
+app.use('/products', authMiddleware.requireAuth, productsRoute);
 
 app.listen(port, function () {
   console.log('Server listening on port', + port);
