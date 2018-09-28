@@ -1,7 +1,7 @@
 extends ../layouts/common
 
 block styles
-    link(rel="stylesheet", href="/styles/reviews.css")
+    link(rel="stylesheet", href="/styles/products.css")
 
 
 block content
@@ -46,10 +46,11 @@ block content
   .container-custom
     .row
       each product in products 
-        .product.col-md-6.col-lg-4.col-xl-3.pt-4        
+        .product.col-md-6.col-lg-4.col-xl-3.pt-4       
           .card
-            .img-box
-              img.avatar(src=product.image, alt='')
+            a(href='/products/' + product.id)
+              .img-box
+                img.avatar(src=product.image, alt='')
             .content
               h2= product.title
               p= product.description

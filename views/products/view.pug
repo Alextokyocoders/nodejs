@@ -1,0 +1,55 @@
+extends ../layouts/common
+
+block styles
+    link(rel="stylesheet", href="/styles/product.css")
+
+
+block content
+
+  .container-custom
+    .row.justify-content-center
+      .product.col-md-6.col-lg-4     
+        .card
+          .img-box
+            img.avatar(src=product.image, alt='')
+
+      .product.col-md-6.col-lg-4     
+          h2= product.name
+          i.far.fa-star.mr-2.mb-3.text-warning
+          i.far.fa-star.mr-2.mb-3.text-warning
+          i.far.fa-star.mr-2.mb-3.text-warning
+          i.far.fa-star.mr-2.mb-3.text-warning
+          i.far.fa-star.mr-2.mb-3.text-warning
+          .price
+            h4.d-inline.mr-3
+              strong $519.00
+            h4.d-inline
+              s
+                small $600.00
+          hr
+          p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus a ab inventore numquam eveniet exercitationem asperiores ex quibusdam deserunt cum corrupti, repudiandae sed, culpa quo explicabo vitae accusantium. Unde nisi iusto vero id vitae esse praesentium tenetur aliquid minima! Earum!
+          p Availability: 
+            span.text-success In Stock
+          hr
+          .add-to-cart.py-3
+            button(type="button").btn.btn-dark.px-5.py-2.font-weight-bold.mr-2.w-75 Add to cart
+            button(type="button").btn.btn-light.px-2.py-2.font-weight-bold.border Wishlist
+          p 
+            span
+              strong Categories: 
+            | Adventure, Biographic, Children
+
+          ul.contact.list-unstyled.d-flex
+            p 
+              span.mr-1
+                strong Share:
+            li.item.mr-3
+              a(href='')
+                i.fab.fa-facebook-f
+            li.item.mr-3
+              a(href='')
+                i.fab.fa-google
+            li.item.mr-3
+              a(href='')
+                i.fab.fa-github                  
+

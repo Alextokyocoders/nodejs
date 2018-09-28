@@ -46,3 +46,13 @@ module.exports.search = function (req, res) {
     total: matchedProducts.length
   });
 };
+
+module.exports.get = function(req, res) {
+  var id = req.params.id;
+
+  var product = db.get('products').find({ id: id }).value();
+
+  res.render('products/view', {
+    product: product
+  });
+};

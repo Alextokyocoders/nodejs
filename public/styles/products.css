@@ -5,6 +5,10 @@ body {
     margin: 0;
 }
 
+a {
+    all: unset;
+}
+
 .card {
     position: relative;
     text-align: center;
