@@ -7,7 +7,7 @@ block styles
 block content
   h1 Products
   .d-flex.align-items-center.mt-4
-
+    
     - var lower_limit = (parseInt((page - 1)/3) * 3) + 1;
     - var paginationNo = lower_limit - 1;
     nav(aria-label='Page navigation example')
@@ -15,28 +15,28 @@ block content
       
       if (page > 1)
         li.page-item
-          a.page-link(href=`?page=${page - 1}`, tabindex='-1') Previous
+          a.page-link(href=`${baseUrl ? baseUrl : '?'}`+`page=${page - 1}`, tabindex='-1') Previous
       else
         li.page-item.disabled
             a.page-link(href='#', tabindex='-1') Previous
 
       each i in [1, 2, 3]
-        if (100 > paginationNo * 8)
+        if (total > paginationNo * 8)
           - paginationNo = paginationNo + 1;
             if (page !== paginationNo)
               li.page-item
-                a.page-link(href=`?page=${paginationNo}`) #{paginationNo}
+                a.page-link(href=`${baseUrl ? baseUrl : '?'}`+`page=${paginationNo}`) #{paginationNo}
             else 
               li.page-item.active
-                a.page-link(href=`?page=${paginationNo}`) #{paginationNo}
+                a.page-link(href=`${baseUrl ? baseUrl : '?'}`+`page=${paginationNo}`) #{paginationNo}
                   span.sr-only (current)              
 
-      if (page < 13)
+      if (page < total/8)
         li.page-item
-          a.page-link(href=`?page=${ page + 1 }`) Next
+          a.page-link(href=`${baseUrl ? baseUrl : '?'}`+`page=${page + 1}`) Next
       else
         li.page-item.disabled
-          a.page-link(href='#') Next
+          a.page-link(href='#', tabindex='-1') Next
 
 
     form.ml-auto(action="/products/search", method="GET", class="d-flex")
