@@ -18,8 +18,11 @@ html
                         a(class="nav-link" href="/products") Products                  
                     li(class="nav-item")
                         a(class="nav-link" href="/users") Users
-                
-                span(class="navbar-text") #{user ? user.name : ''}
-                
+                if user    
+                    span(class="navbar-text").pr-3= user.name
+                span.nav-text
+                    i.fas.fa-shopping-cart.fa-lg.pr-2
+                    = countItem
+                    
         .container.pt-5
             block content

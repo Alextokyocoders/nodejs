@@ -5,10 +5,6 @@ body {
     margin: 0;
 }
 
-a {
-    all: unset;
-}
-
 .card {
     text-align: center;
     background-color: #ccc;

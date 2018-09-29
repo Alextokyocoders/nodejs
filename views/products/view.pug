@@ -32,8 +32,8 @@ block content
             span.text-success In Stock
           hr
           .add-to-cart.py-3
-            button(type="button").btn.btn-dark.px-5.py-2.font-weight-bold.mr-2.w-75 Add to cart
-            button(type="button").btn.btn-light.px-2.py-2.font-weight-bold.border Wishlist
+            a(href="/cart/checkout/" + product.id).btn.btn-dark.px-5.py-2.font-weight-bold.mr-2.w-75 Add to cart
+            a(href="#").btn.btn-light.px-2.py-2.font-weight-bold.border Wishlist
           p 
             span
               strong Categories: 
