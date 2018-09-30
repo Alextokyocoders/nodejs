@@ -3,7 +3,8 @@ var shortid = require('shortid');
 var db = require('../db');
 
 module.exports = function(req, res, next) {
-  if (!req.signedCookies.sessionId) {
+  var sessionId = req.signedCookies.sessionId;
+  if (!sessionId) {
     var sessionId = shortid.generate();
     res.cookie('sessionId', sessionId, {
       signed: true      
@@ -17,7 +18,7 @@ module.exports = function(req, res, next) {
 
   var cart = db
   .get('sessions')
-  .find({ id: req.signedCookies.sessionId })
+  .find({ id: sessionId })
   .get('cart',0)
   .value();
 

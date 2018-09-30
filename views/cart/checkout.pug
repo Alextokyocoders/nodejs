@@ -1,0 +1,65 @@
+extends ../layouts/common
+
+block styles
+	//- link(rel="stylesheet", href="/styles/product.css")
+
+block content
+	h5.text-center.mb-4
+		strong SHOPPING CART
+	.row
+		.col-12.col-lg-8    
+			each product in productInCart
+				.card.mb-3
+					.card-body.d-flex
+						img(src=product.image, style="min-width: 100px; height: 150px")
+						.d-lg-flex.flex-wrap.pl-4.flex-grow-1
+							.content(style="width: 65%;")
+								
+									strong= product.name 
+										span
+											small  by
+									.author
+										small Samin Nosrat
+									small Hardcover
+									div
+										small
+											span.text-success In Stock
+									div
+										small Reward Points: 1000
+							div.d-flex
+								.price.mt-1
+									small= '$' + product.price
+								select.custom-select.custom-select-sm.ml-3(style="width: 60px;")
+									option.selected 1
+									option(value="2") 2
+									option(value="3") 3
+						button(style="height: 10px;").close(type='button', aria-label='Close')
+							span(aria-hidden='true') ×
+
+
+
+		.col.col-lg-4
+			.card
+				.card-body
+					h5
+						small
+							strong SUMMARY
+				.card-body
+					.d-flex.justify-content-between.p-2
+						div Subtotal
+						div $30,947.81
+					.d-flex.justify-content-between.p-2
+						div Shipping
+						h5.pb-0.mb-0(style="color: #FFBB6A; font-size: 1rem;") $23.00
+					p.text-right
+						small
+							strong(style="color: #FFBB6A;") One shipping fee	
+					hr
+					.d-flex.justify-content-between.p-2
+						div Total
+						strong $30,970.81
+					a(href="/auth/login").btn.btn-dark.px-5.py-2.mt-3.font-weight-bold.mr-2.w-100 Go to checkout
+
+block js
+	script(type="text/javascript", src="./js/checkout")
+

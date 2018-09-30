@@ -55,4 +55,7 @@ module.exports.get = function(req, res) {
   res.render('products/view', {
     product: product
   });
+
+  app.locals.localProductId = id;
+  // res.locals.localProductId = id;
 };

@@ -4,6 +4,8 @@ var controller = require('../controllers/cart.controller');
 
 var router = express.Router();
 
-router.get('/checkout/:productId', controller.checkout);
+router.get('/add/:id', controller.add);
+
+router.get('/checkout', controller.checkout);
 
 module.exports = router;
