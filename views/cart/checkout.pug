@@ -28,11 +28,13 @@ block content
 										small Reward Points: 1000
 							div.d-flex
 								.price.mt-1
-									small= '$' + product.price
-								select.custom-select.custom-select-sm.ml-3(style="width: 60px;")
-									option.selected 1
-									option(value="2") 2
-									option(value="3") 3
+									small#totalPrice= '$' + product.price
+								select#select-quanity.custom-select.custom-select-sm.ml-3(style="width: 60px;")
+									option(selected='1') 1
+									option(value='2') 2
+									option(value='3') 3
+
+
 						button(style="height: 10px;").close(type='button', aria-label='Close')
 							span(aria-hidden='true') ×
 
@@ -61,5 +63,10 @@ block content
 					a(href="/auth/login").btn.btn-dark.px-5.py-2.mt-3.font-weight-bold.mr-2.w-100 Go to checkout
 
 block js
-	script(type="text/javascript", src="./js/checkout")
+	//- script(type="text/javascript", src="/js/checkout.js")
+			
+
+
+
+
 
