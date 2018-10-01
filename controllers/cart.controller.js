@@ -1,4 +1,5 @@
 var db = require('../db');
+var Product = require('../models/product.model');
 
 module.exports.add = function(req, res, next) {
   var productId = req.params.id;
@@ -8,7 +9,7 @@ module.exports.add = function(req, res, next) {
     res.redirect('/products');
     return;
   }
-
+// Dem items trong cart
   var count = db
     .get('sessions')
     .find({ id: sessionId })
@@ -23,7 +24,7 @@ module.exports.add = function(req, res, next) {
   res.redirect('/cart/checkout');
 };
 
-module.exports.checkout = function(req, res, next) {
+module.exports.checkout = async function(req, res, next) {
   var sessionId = req.signedCookies.sessionId;
 
   var cart = db
@@ -37,7 +38,7 @@ module.exports.checkout = function(req, res, next) {
   var arrIdOfProduct = Object.keys(cart);
 
   for (let idProduct of arrIdOfProduct) {
-    var product = db.get('products').find({ id: idProduct }).value();
+    var product = await Product.findById(idProduct);
     productInCart.push(product);
   }
 

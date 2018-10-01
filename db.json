@@ -842,9 +842,25 @@
       }
     },
     {
+<<<<<<< HEAD
       "id": "jgjkOg_fj",
       "cart": {
         "69815907-bb59-45d5-b584-0736ea21c26e": 1
+=======
+      "id": "9dG5vXbP4",
+      "cart": {
+        "d7a5adbe-6727-417d-8f4b-04010612ef3e": 1,
+        "5bb1bfee1b5e117b35b4d789": 1,
+        "5bb1cf6f1b5e117b35b4deca": 1
+      }
+    },
+    {
+      "id": "BMAjAU1Vk",
+      "cart": {
+        "5bb1bfee1b5e117b35b4d789": 2,
+        "5bb1c21e1b5e117b35b4d85c": 2,
+        "5bb1c2981b5e117b35b4d89b": 1
+>>>>>>> mongodb
       }
     }
   ]

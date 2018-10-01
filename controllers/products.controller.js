@@ -1,31 +1,41 @@
+var Product = require('../models/product.model');
 
-module.exports.index = function(req, res){
-  var page = parseInt(req.query.page) || 1; // n
-  var perPage = 8; // x
-
-  var start = (page - 1) * perPage;
-  var end = page * perPage;
-
+module.exports.index = async function(req, res){
+  var page = parseInt(req.query.page) || 1; // ?=page
+  var perPage = 8; // 
   var drop = (page - 1) * perPage;
+
+  // var start = (page - 1) * perPage;
+  // var end = page * perPage;
+  // var totalProducts = db.get('products').value();
+  // var productsPerPage = db.get('products').drop(drop).take(perPage).value();
   
-  var totalProducts = db.get('products').value();
-  var productsPerPage = db.get('products').drop(drop).take(perPage).value();
-  
-  res.render('products/index', {
+  // res.render('products/index', {
     // cach 1:
     // products: db.get('products').value().slice(start, end)
     // cach 2:
+  //   products: productsPerPage,
+  //   page: page,
+  //   total: totalProducts.length
+  // });
+
+  var products = await Product.find();
+  var numProducts = await Product.estimatedDocumentCount();
+  var productsPerPage = await Product.find(null, null, { skip: drop }).limit(perPage);
+
+  res.render('products/index', {
     products: productsPerPage,
     page: page,
-    total: totalProducts.length
+    total: numProducts
   });
 };
 
-module.exports.search = function (req, res) {
+module.exports.search = async function (req, res) {
   // Loc cac phan tu co tu khoa q
   var q = req.query.q;
 
-  var matchedProducts = db.get('products').value().filter(function (product) {
+  var matchedProducts = await Product.find();
+  matchedProducts = matchedProducts.filter(function (product) {
     return product.title.toLowerCase().indexOf(q.toLowerCase()) !== -1;
   });
 // Danh so trang moi page
@@ -47,10 +57,10 @@ module.exports.search = function (req, res) {
   });
 };
 
-module.exports.get = function(req, res) {
+module.exports.get = async function(req, res) {
   var id = req.params.id;
 
-  var product = db.get('products').find({ id: id }).value();
+  var product = await Product.findById(id);
 
   res.render('products/view', {
     product: product
