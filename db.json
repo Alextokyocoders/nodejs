@@ -831,36 +831,14 @@
   ],
   "sessions": [
     {
-      "id": "RiFbmMw4f",
+      "id": "oXb57rkoA",
       "cart": {
-        "69815907-bb59-45d5-b584-0736ea21c26e": 3,
-        "488b103f-5ad3-45a6-844c-464795e3cae5": 1,
-        "4f049207-5fa8-42e7-9367-9d16627bf1ef": 2,
-        "d7a5adbe-6727-417d-8f4b-04010612ef3e": 1,
-        "1d19916c-bd6c-46c9-bb9f-bf99685092cd": 2,
-        "cbbd5a96-f271-441d-9c96-c7e7c8207557": 1
-      }
-    },
-    {
-<<<<<<< HEAD
-      "id": "jgjkOg_fj",
-      "cart": {
-        "69815907-bb59-45d5-b584-0736ea21c26e": 1
-=======
-      "id": "9dG5vXbP4",
-      "cart": {
-        "d7a5adbe-6727-417d-8f4b-04010612ef3e": 1,
         "5bb1bfee1b5e117b35b4d789": 1,
-        "5bb1cf6f1b5e117b35b4deca": 1
-      }
-    },
-    {
-      "id": "BMAjAU1Vk",
-      "cart": {
-        "5bb1bfee1b5e117b35b4d789": 2,
-        "5bb1c21e1b5e117b35b4d85c": 3,
-        "5bb1c2981b5e117b35b4d89b": 1
->>>>>>> mongodb
+        "5bb1c21e1b5e117b35b4d85c": 1,
+        "5bb1c2981b5e117b35b4d89b": 1,
+        "5bb1cf6f1b5e117b35b4de28": 1,
+        "5bb1cf6f1b5e117b35b4de26": 1,
+        "5bb1cf6f1b5e117b35b4de5c": 1
       }
     }
   ]
