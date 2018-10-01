@@ -3,12 +3,14 @@ extends ../layouts/common
 block styles
 	//- link(rel="stylesheet", href="/styles/product.css")
 
+
 block content
 	h5.text-center.mb-4
 		strong SHOPPING CART
+	- var totalPrices = [...productInCart.map(item => item.price)].reduce((a, b) => a + b)
 	.row
-		.col-12.col-lg-8    
-			each product in productInCart
+		.col-12.col-lg-8#select-quanity    
+			each product, index in productInCart
 				.card.mb-3
 					.card-body.d-flex
 						img(src=product.image, style="min-width: 100px; height: 150px")
@@ -28,11 +30,15 @@ block content
 										small Reward Points: 1000
 							div.d-flex
 								.price.mt-1
-									small#totalPrice= '$' + product.price
-								select#select-quanity.custom-select.custom-select-sm.ml-3(style="width: 60px;")
+									small.total-price-per-item= '$' + product.price
+								select.custom-select.custom-select-sm.ml-3(style="width: 60px;")(data-id= index)
 									option(selected='1') 1
 									option(value='2') 2
 									option(value='3') 3
+									option(value='4') 4
+									option(value='5') 5
+									option(value='6') 6
+									option(value='7') 7
 
 
 						button(style="height: 10px;").close(type='button', aria-label='Close')
@@ -49,24 +55,53 @@ block content
 				.card-body
 					.d-flex.justify-content-between.p-2
 						div Subtotal
-						div $30,947.81
+						#total-pug $#{totalPrices}
 					.d-flex.justify-content-between.p-2
 						div Shipping
-						h5.pb-0.mb-0(style="color: #FFBB6A; font-size: 1rem;") $23.00
+						h5#shipping-pug.pb-0.mb-0(style="color: #FFBB6A; font-size: 1rem;") $#{totalPrices*2/100}
 					p.text-right
 						small
 							strong(style="color: #FFBB6A;") One shipping fee	
 					hr
 					.d-flex.justify-content-between.p-2
 						div Total
-						strong $30,970.81
+						strong#include-shipprice $#{totalPrices*102/100}
 					a(href="/auth/login").btn.btn-dark.px-5.py-2.mt-3.font-weight-bold.mr-2.w-100 Go to checkout
 
 block js
-	script(type="text/javascript", src="/js/checkout.js")
-			
+	script.
+		var productInCart = !{JSON.stringify(productInCart)};
+		//- console.log(productInCart);
+		var quanity = document.getElementById('select-quanity'); // SELECT ELEMENT
+		quanity.addEventListener('change', onFilterChange); // OnCHAGE
+		
+		var totalPricePerItem = document.getElementsByClassName('total-price-per-item'); // PUG moi price 
+		var totalPug = document.getElementById('total-pug'); // PUG tong cac price
+		var shippingPug = document.getElementById('shipping-pug');		// tien ship
+		var includeShipPrice = document.getElementById('include-shipprice'); // tat ca tien
 
+		var arrOfPrice = [...productInCart.map(item => item.price)]; // day cac price (sl: 1)
+		var totalPrices = arrOfPrice.reduce((a, b) => a + b); // tong cac price (sl: 1)
 
+		function onFilterChange(event) {
+		    var selectButton = event.target;
+		    var i = parseInt(selectButton.dataset.id);
 
+		    var productPrice = productInCart[i].price;
+		    // get current value of the select
+			var selectedValue = selectButton.value;
+			//get total price
+		    var productPriceTimes = productPrice * selectedValue;
+		    // render
+		    totalPricePerItem[i].innerHTML = '$' + productPriceTimes;
+		    arrOfPrice[i] = productPriceTimes;
 
+		    var totalPrices = arrOfPrice.reduce((a, b) => a + b);
 
+		    totalPug.innerHTML = '$' + totalPrices;
+		    shippingPug.innerHTML = '$' + totalPrices*2/100;
+		    includeShipPrice.innerHTML = '$' + totalPrices*102/100;
+		  } 
+
+	//- script(type="text/javascript", src="/js/checkout.js")
+	//Dung them Storage de khi click quay lai trang product no van giu nguyen selected
