@@ -4,10 +4,11 @@ var db = require('../db');
 
 module.exports = function(req, res, next) {
   var sessionId = req.signedCookies.sessionId;
+  
   if (!sessionId) {
     var sessionId = shortid.generate();
     res.cookie('sessionId', sessionId, {
-      signed: true      
+      signed: true
     });
 
     db.get('sessions').push({
