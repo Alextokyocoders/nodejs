@@ -15,7 +15,6 @@ module.exports = function(req, res, next) {
     }).write();
   }
 
-
   var cart = db
   .get('sessions')
   .find({ id: sessionId })
