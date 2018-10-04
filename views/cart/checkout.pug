@@ -1,9 +1,7 @@
 extends ../layouts/common
 
 block styles
-	//- link(rel="stylesheet", href="/styles/product.css")
-
-
+	link(rel="stylesheet", href="/styles/cart.css")
 block content
 	h5.text-center.mb-4
 		strong SHOPPING CART
@@ -71,17 +69,28 @@ block content
 block js
 	script.
 		var productInCart = !{JSON.stringify(productInCart)};
-		//- console.log(productInCart);
-		var quanity = document.getElementById('select-quanity'); // SELECT ELEMENT
-		quanity.addEventListener('change', onFilterChange); // OnCHAGE
-		
-		var totalPricePerItem = document.getElementsByClassName('total-price-per-item'); // PUG moi price 
+		var buttonSelect = document.getElementsByClassName('custom-select');
+		var totalPricePerItem = document.getElementsByClassName('total-price-per-item');
+
 		var totalPug = document.getElementById('total-pug'); // PUG tong cac price
 		var shippingPug = document.getElementById('shipping-pug');		// tien ship
 		var includeShipPrice = document.getElementById('include-shipprice'); // tat ca tien
 
-		var arrOfPrice = [...productInCart.map(item => item.price)]; // day cac price (sl: 1)
-		var totalPrices = arrOfPrice.reduce((a, b) => a + b); // tong cac price (sl: 1)
+		var arrOfPrice = [];
+		for (let i = 0; i < productInCart.length; i++) {
+			buttonSelect[i].value = productInCart[i].quanity;
+			totalPricePerItem[i].innerHTML = '$' + productInCart[i].price * productInCart[i].quanity;
+			arrOfPrice.push(productInCart[i].price * productInCart[i].quanity);
+		}
+		var totalPrices = arrOfPrice.reduce((a, b) => a + b);
+
+		totalPug.innerHTML = '$' + totalPrices;
+		shippingPug.innerHTML = '$' + totalPrices*2/100;
+		includeShipPrice.innerHTML = '$' + totalPrices*102/100;
+
+		var quanity = document.getElementById('select-quanity'); 
+		quanity.addEventListener('change', onFilterChange);
+		
 
 		function onFilterChange(event) {
 		    var selectButton = event.target;
@@ -101,6 +110,7 @@ block js
 		    totalPug.innerHTML = '$' + totalPrices;
 		    shippingPug.innerHTML = '$' + totalPrices*2/100;
 		    includeShipPrice.innerHTML = '$' + totalPrices*102/100;
+		    //- document.location.href = 'http://localhost:3000/cart/checkout';
 		  } 
 
 	//- script(type="text/javascript", src="/js/checkout.js")

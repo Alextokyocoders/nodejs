@@ -11,37 +11,39 @@ module.exports.add = async function(req, res, next) {
     return;
   }
 
+  var product = await Product.findById(productId);
+
   // add product with productId
   Session.findByIdAndUpdate(sessionId, { $inc: { totalProduct: 1 } }, {new: true }, function(err, doc) {
     for (let i = 0; i < doc.cart.length; i++) {
       if (doc.cart[i].productId == productId) {
         doc.cart[i].quanity += 1;
+        doc.save();
+        return;
       }
     }
-  
 
-    doc.cart.push({productId: productId, quanity: 1});
+    doc.cart.push({
+      productId: productId,
+      quanity: 1,
+      name: product.name,
+      image: product.image,
+      description: product.description,
+      title: product.title,
+      price: product.price
+    });
+
     doc.save();
   });
-
 
   res.redirect('/cart/checkout');
 };
 
 module.exports.checkout = async function(req, res, next) {
   var sessionId = req.signedCookies.sessionId;
-  // // pass productInCart to Pug file
-  var productInCart = [];
-
   var session = await Session.findById(sessionId);
 
-  for (let item of session.cart) {
-    var product = await Product.findById(item.productId);
-    productInCart.push(product);
-  }
-
   res.render('cart/checkout', {
-    productInCart: productInCart,
-    session: session
+    productInCart: session.cart,
   });
 }

@@ -5,6 +5,11 @@ var sessionSchema = new mongoose.Schema({
   cart: [
     {
       productId: String,
+      name: String,
+      image: String,
+      description: String,
+      title: String,
+      price: Number,
       quanity: Number
     }
   ]
