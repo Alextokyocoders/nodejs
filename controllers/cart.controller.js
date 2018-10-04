@@ -1,7 +1,8 @@
 var db = require('../db');
 var Product = require('../models/product.model');
+var Session = require('../models/session.model');
 
-module.exports.add = function(req, res, next) {
+module.exports.add = async function(req, res, next) {
   var productId = req.params.id;
   var sessionId = req.signedCookies.sessionId;
 
@@ -9,40 +10,38 @@ module.exports.add = function(req, res, next) {
     res.redirect('/products');
     return;
   }
-// Dem items trong cart
-  var count = db
-    .get('sessions')
-    .find({ id: sessionId })
-    .get('cart.' + productId, 0)
-    .value();
 
-  db.get('sessions')
-    .find({ id: sessionId })
-    .set('cart.' + productId, count + 1)
-    .write();
+  // add product with productId
+  Session.findByIdAndUpdate(sessionId, { $inc: { totalProduct: 1 } }, {new: true }, function(err, doc) {
+    for (let i = 0; i < doc.cart.length; i++) {
+      if (doc.cart[i].productId == productId) {
+        doc.cart[i].quanity += 1;
+      }
+    }
+  
+
+    doc.cart.push({productId: productId, quanity: 1});
+    doc.save();
+  });
+
 
   res.redirect('/cart/checkout');
 };
 
 module.exports.checkout = async function(req, res, next) {
   var sessionId = req.signedCookies.sessionId;
-
-  var cart = db
-  .get('sessions')
-  .find({ id: sessionId })
-  .get('cart', 0)
-  .value();
-
+  // // pass productInCart to Pug file
   var productInCart = [];
 
-  var arrIdOfProduct = Object.keys(cart);
+  var session = await Session.findById(sessionId);
 
-  for (let idProduct of arrIdOfProduct) {
-    var product = await Product.findById(idProduct);
+  for (let item of session.cart) {
+    var product = await Product.findById(item.productId);
     productInCart.push(product);
   }
 
   res.render('cart/checkout', {
-    productInCart: productInCart
+    productInCart: productInCart,
+    session: session
   });
 }
