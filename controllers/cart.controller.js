@@ -46,4 +46,23 @@ module.exports.checkout = async function(req, res, next) {
   res.render('cart/checkout', {
     productInCart: session.cart,
   });
-}
+};
+
+module.exports.updateSelectedQuanity = function(req, res) {
+  var sessionId = req.signedCookies.sessionId;
+
+  var productId = req.body.productId;
+  var quanity = req.body.quanity;
+
+
+  Session.findById(sessionId, function(err, doc) {
+    for (let i = 0; i < doc.cart.length; i++) {
+      if (doc.cart[i].productId == productId) {
+        doc.totalProduct += (req.body.quanity - doc.cart[i].quanity);
+        doc.cart[i].quanity = req.body.quanity;
+        doc.save();
+      }
+    }
+  })
+
+};

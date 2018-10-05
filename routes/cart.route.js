@@ -8,4 +8,6 @@ router.get('/add/:id', controller.add);
 
 router.get('/checkout', controller.checkout);
 
+router.post('/checkout/ajaxcall', controller.updateSelectedQuanity);
+
 module.exports = router;
