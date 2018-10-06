@@ -79,6 +79,7 @@ block js
 		arrOfQuanity = [...productInCart.map(item => item.quanity)];
 
 		function render(arrOfQuanity) {
+			console.log('hihi');
 			var arrOfPrice = [];
 
 			for (let i = 0; i < productInCart.length; i++) {
@@ -87,10 +88,10 @@ block js
 				arrOfPrice.push(productInCart[i].price * arrOfQuanity[i]);
 			}
 			var totalPrices = arrOfPrice.reduce((a, b) => a + b);
-
-			$('#total-pug').innerHTML = '$' + totalPrices;
-			$('#shipping-pug').innerHTML = '$' + totalPrices*2/100;
-			$('#include-shipprice').innerHTML = '$' + totalPrices*102/100;
+			console.log(totalPrices);
+			$('#total-pug')[0].innerHTML = '$' + totalPrices;
+			$('#shipping-pug')[0].innerHTML = '$' + totalPrices*2/100;
+			$('#include-shipprice')[0].innerHTML = '$' + totalPrices*102/100;
 			$(".total-product.d-inline")[0].innerHTML = arrOfQuanity.reduce((a, b) => parseInt(a) + parseInt(b), 0);
 		}
 
