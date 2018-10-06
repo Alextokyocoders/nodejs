@@ -54,7 +54,6 @@ module.exports.updateSelectedQuanity = function(req, res) {
   var productId = req.body.productId;
   var quanity = req.body.quanity;
 
-
   Session.findById(sessionId, function(err, doc) {
     for (let i = 0; i < doc.cart.length; i++) {
       if (doc.cart[i].productId == productId) {
@@ -66,3 +65,11 @@ module.exports.updateSelectedQuanity = function(req, res) {
   })
 
 };
+
+module.exports.delete = async function(req, res) {
+  var sessionId = req.signedCookies.sessionId;
+  var productId = req.body.productId;
+  var doc = await Session.findByIdAndUpdate(sessionId, {$pull: {'cart' : {'productId': productId}}});
+  console.log(doc);
+  console.log(productId);
+}
