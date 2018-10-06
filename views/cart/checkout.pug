@@ -46,7 +46,7 @@ block content
 
 
 						button(style="height: 10px;").close(type='button', aria-label='Close')
-							span(aria-hidden='true') ×
+							span(aria-hidden='true')(data-close= index).close-button ×
 
 
 
@@ -76,66 +76,51 @@ block js
 	script.
 		var countItem = "#{countItem}";
 		var productInCart = !{JSON.stringify(productInCart)};
-		var buttonSelect = document.getElementsByClassName('custom-select');
+		arrOfQuanity = [...productInCart.map(item => item.quanity)];
 
+		function render(arrOfQuanity) {
+			var arrOfPrice = [];
 
-		var totalPricePerItem = document.getElementsByClassName('total-price-per-item');
-		
-		var totalPug = document.getElementById('total-pug'); // PUG tong cac price
-		var shippingPug = document.getElementById('shipping-pug');		// tien ship
-		var includeShipPrice = document.getElementById('include-shipprice'); // tat ca tien
+			for (let i = 0; i < productInCart.length; i++) {
+				$('.custom-select')[i].value = arrOfQuanity[i];
+				$('.total-price-per-item')[i].innerHTML = '$' + productInCart[i].price * arrOfQuanity[i];
+				arrOfPrice.push(productInCart[i].price * arrOfQuanity[i]);
+			}
+			var totalPrices = arrOfPrice.reduce((a, b) => a + b);
 
-		var arrOfPrice = [];
-		for (let i = 0; i < productInCart.length; i++) {
-			buttonSelect[i].value = productInCart[i].quanity;
-			totalPricePerItem[i].innerHTML = '$' + productInCart[i].price * productInCart[i].quanity;
-			arrOfPrice.push(productInCart[i].price * productInCart[i].quanity);
+			$('#total-pug').innerHTML = '$' + totalPrices;
+			$('#shipping-pug').innerHTML = '$' + totalPrices*2/100;
+			$('#include-shipprice').innerHTML = '$' + totalPrices*102/100;
+			$(".total-product.d-inline")[0].innerHTML = arrOfQuanity.reduce((a, b) => parseInt(a) + parseInt(b), 0);
 		}
-		var totalPrices = arrOfPrice.reduce((a, b) => a + b);
 
-		totalPug.innerHTML = '$' + totalPrices;
-		shippingPug.innerHTML = '$' + totalPrices*2/100;
-		includeShipPrice.innerHTML = '$' + totalPrices*102/100;
+		render(arrOfQuanity);
 		
-
-
 		var quanity = document.getElementById('select-quanity'); 
-		quanity.addEventListener('change', onFilterChange);
-	
-		
+		quanity.addEventListener('change', onSelectChange); 
+		quanity.addEventListener('click', onClose);
 
-		function onFilterChange(event) {
+
+		function onClose(event) {
+			var selectButton = event.target ;
+			var i = parseInt(selectButton.dataset.close);
+			console.log(i);
+			$(".close-button[data-close='" + i + "']").parents('.card').remove();
+		}
+
+		function onSelectChange(event) {
 		    var selectButton = event.target;
 		    var i = parseInt(selectButton.dataset.id);
-
-		    var productPrice = productInCart[i].price;
-		    // get current value of the select
 			var selectedValue = selectButton.value;
-			//get total price
-		    var productPriceTimes = productPrice * selectedValue;
-		    // render
-		    totalPricePerItem[i].innerHTML = '$' + productPriceTimes;
-		    arrOfPrice[i] = productPriceTimes;
 
-		    var totalPrices = arrOfPrice.reduce((a, b) => a + b);
+			arrOfQuanity[i] = selectedValue;
+			render(arrOfQuanity);
 			
-		    totalPug.innerHTML = '$' + totalPrices;
-		    shippingPug.innerHTML = '$' + totalPrices*2/100;
-		    includeShipPrice.innerHTML = '$' + totalPrices*102/100;
-
-			var result = 0;
-			for (let j = 0; j < productInCart.length; j++) {
-				result += parseInt($('.custom-select')[j].value);
-
-			}
-
-			$(".total-product.d-inline")[0].innerText = result;
-
 		    (function post() {
 				$.ajax({
 					type: 'POST',
 					url: 'http://localhost:3000/cart/checkout/ajaxcall',
-					data: {productId: productInCart[i].productId,quanity: selectedValue},
+					data: {productId: productInCart[i].productId, quanity: selectedValue},
 					dataType: 'json'
 				})
 				.done(function(data) {
@@ -146,8 +131,3 @@ block js
 				});
 			})();
 		}
-
-
-
-	//- script(type="text/javascript", src="/js/checkout.js")
-	//Dung them Storage de khi click quay lai trang product no van giu nguyen selected
