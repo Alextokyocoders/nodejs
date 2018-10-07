@@ -10,6 +10,6 @@ router.get('/checkout', controller.checkout);
 
 router.post('/checkout/ajaxcall', controller.updateSelectedQuanity);
 
-router.post('/checkout/delete', controller.updateSelectedQuanity);
+router.post('/checkout/delete', controller.delete);
 
 module.exports = router;

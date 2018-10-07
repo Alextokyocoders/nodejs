@@ -31,7 +31,7 @@ block content
 										small Reward Points: 1000
 							div.d-flex
 								.price.mt-1
-									small.total-price-per-item= '$' + product.price
+									small.total-price-per-item(data-price= index)= '$' + product.price
 								select.custom-select.custom-select-sm.ml-3(style="width: 60px;")(data-id= index)
 									option(selected='1') 1
 									option(value='2') 2
@@ -76,18 +76,20 @@ block js
 	script.
 		var countItem = "#{countItem}";
 		var productInCart = !{JSON.stringify(productInCart)};
-		arrOfQuanity = [...productInCart.map(item => item.quanity)];
+		var arrOfQuanity = [...productInCart.map(item => item.quanity)];
 
 		function render(arrOfQuanity) {
 			console.log('hihi');
 			var arrOfPrice = [];
 
 			for (let i = 0; i < productInCart.length; i++) {
-				$('.custom-select')[i].value = arrOfQuanity[i];
-				$('.total-price-per-item')[i].innerHTML = '$' + productInCart[i].price * arrOfQuanity[i];
-				arrOfPrice.push(productInCart[i].price * arrOfQuanity[i]);
+				if (productInCart[i]) {
+					$(`.custom-select[data-id= ${i}]`)[0].value = arrOfQuanity[i];
+					$(`.total-price-per-item[data-price= ${i}]`)[0].innerHTML = '$' + productInCart[i].price * arrOfQuanity[i];
+					arrOfPrice.push(productInCart[i].price * arrOfQuanity[i]);
+				}
 			}
-			var totalPrices = arrOfPrice.reduce((a, b) => a + b);
+			var totalPrices = arrOfPrice.reduce((a, b) => a + b, 0);
 			console.log(totalPrices);
 			$('#total-pug')[0].innerHTML = '$' + totalPrices;
 			$('#shipping-pug')[0].innerHTML = '$' + totalPrices*2/100;
@@ -107,13 +109,22 @@ block js
 				var selectButton = event.target ;
 				var i = parseInt(selectButton.dataset.close);
 				console.log(i);
+				var productId = productInCart[i].productId;
+				var quanityOfProductDel = $(`.custom-select[data-id= ${i}]`)[0].value;
+
 				$(".close-button[data-close='" + i + "']").parents('.card').remove();
+
+				productInCart[i] = null;
+				arrOfQuanity[i] = 0;
+				//- arrOfQuanity.splice(i, 1);
+				render(arrOfQuanity);
+
 
 				(function post() {
 					$.ajax({
 						type: 'POST',
 						url: 'http://localhost:3000/cart/checkout/delete',
-						data: {productId: productInCart[i].productId},
+						data: {productId: productId, quanity: quanityOfProductDel},
 						dataType: 'json'
 					})
 					.done(function(data) {
@@ -123,6 +134,8 @@ block js
 						console.log('AJAX error response:', textStatus);
 					});
 				})();
+
+
 			}
 		}
 

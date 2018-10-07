@@ -66,7 +66,12 @@ module.exports.updateSelectedQuanity = function(req, res) {
   })
 };
 
-module.exports.deleteProduct = function(req, res) {
+module.exports.delete = async function(req, res) {
   var sessionId = req.signedCookies.sessionId;
+  var productId = req.body.productId;
+  var quanity = req.body.quanity;
   
+  var doc = await Session.findByIdAndUpdate(sessionId, {$pull: {'cart' : {'productId': productId}}});
+  doc.totalProduct = doc.totalProduct - quanity;
+  doc.save();
 }
