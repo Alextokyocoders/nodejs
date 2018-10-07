@@ -23,7 +23,8 @@ html
                 if user    
                     span(class="navbar-text").pr-3= user.name
                 span.nav-text.total
-                    i.fas.fa-shopping-cart.fa-lg.pr-2
+                    a(href="http://localhost:3000/cart/checkout")
+                        i.fas.fa-shopping-cart.fa-lg.pr-2
                     .total-product.d-inline
                         =countItem
                     

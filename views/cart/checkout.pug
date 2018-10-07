@@ -6,6 +6,8 @@ block script2
 	script(src="http://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous")
 block content
 
+	- const numberWithCommas = (x) =>  x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
 	h5.text-center.mb-4
 		strong SHOPPING CART
 	- var totalPrices = [...productInCart.map(item => item.price)].reduce((a, b) => a + b, 0)
@@ -31,7 +33,7 @@ block content
 										small Reward Points: 1000
 							div.d-flex
 								.price.mt-1
-									small.total-price-per-item(data-price= index)= '$' + product.price
+									small.total-price-per-item(data-price= index) $#{numberWithCommas(product.price)}
 								select.custom-select.custom-select-sm.ml-3(style="width: 60px;")(data-id= index)
 									option(selected='1') 1
 									option(value='2') 2
@@ -59,21 +61,22 @@ block content
 				.card-body
 					.d-flex.justify-content-between.p-2
 						div Subtotal
-						#total-pug $#{totalPrices}
+						#total-pug $#{numberWithCommas(totalPrices)}
 					.d-flex.justify-content-between.p-2
 						div Shipping
-						h5#shipping-pug.pb-0.mb-0(style="color: #FFBB6A; font-size: 1rem;") $#{totalPrices*2/100}
+						h5#shipping-pug.pb-0.mb-0(style="color: #FFBB6A; font-size: 1rem;") $#{numberWithCommas(totalPrices*2/100)}
 					p.text-right
 						small
 							strong(style="color: #FFBB6A;") One shipping fee	
 					hr
 					.d-flex.justify-content-between.p-2
 						div Total
-						strong#include-shipprice $#{totalPrices*102/100}
+						strong#include-shipprice $#{numberWithCommas(totalPrices*102/100)}
 					a(href="/auth/login").btn.btn-dark.px-5.py-2.mt-3.font-weight-bold.mr-2.w-100 Go to checkout
 
 block js
 	script.
+		const numberWithCommas = (x) =>  x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		var countItem = "#{countItem}";
 		var productInCart = !{JSON.stringify(productInCart)};
 		var arrOfQuanity = [...productInCart.map(item => item.quanity)];
@@ -85,15 +88,15 @@ block js
 			for (let i = 0; i < productInCart.length; i++) {
 				if (productInCart[i]) {
 					$(`.custom-select[data-id= ${i}]`)[0].value = arrOfQuanity[i];
-					$(`.total-price-per-item[data-price= ${i}]`)[0].innerHTML = '$' + productInCart[i].price * arrOfQuanity[i];
+					$(`.total-price-per-item[data-price= ${i}]`)[0].innerHTML = '$' + numberWithCommas(productInCart[i].price * arrOfQuanity[i]);
 					arrOfPrice.push(productInCart[i].price * arrOfQuanity[i]);
 				}
 			}
 			var totalPrices = arrOfPrice.reduce((a, b) => a + b, 0);
 			console.log(totalPrices);
-			$('#total-pug')[0].innerHTML = '$' + totalPrices;
-			$('#shipping-pug')[0].innerHTML = '$' + totalPrices*2/100;
-			$('#include-shipprice')[0].innerHTML = '$' + totalPrices*102/100;
+			$('#total-pug')[0].innerHTML = '$' + numberWithCommas(totalPrices);
+			$('#shipping-pug')[0].innerHTML = '$' + numberWithCommas(totalPrices*2/100);
+			$('#include-shipprice')[0].innerHTML = '$' + numberWithCommas(totalPrices*102/100);
 			$(".total-product.d-inline")[0].innerHTML = arrOfQuanity.reduce((a, b) => parseInt(a) + parseInt(b), 0);
 		}
 
