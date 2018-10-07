@@ -64,5 +64,9 @@ module.exports.updateSelectedQuanity = function(req, res) {
       }
     }
   })
-
 };
+
+module.exports.deleteProduct = function(req, res) {
+  var sessionId = req.signedCookies.sessionId;
+  
+}

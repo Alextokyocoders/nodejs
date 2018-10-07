@@ -103,32 +103,51 @@ block js
 
 
 		function onClose(event) {
-			var selectButton = event.target ;
-			var i = parseInt(selectButton.dataset.close);
-			console.log(i);
-			$(".close-button[data-close='" + i + "']").parents('.card').remove();
+			if(event.target.classList.contains('close-button')) {
+				var selectButton = event.target ;
+				var i = parseInt(selectButton.dataset.close);
+				console.log(i);
+				$(".close-button[data-close='" + i + "']").parents('.card').remove();
+
+				(function post() {
+					$.ajax({
+						type: 'POST',
+						url: 'http://localhost:3000/cart/checkout/delete',
+						data: {productId: productInCart[i].productId},
+						dataType: 'json'
+					})
+					.done(function(data) {
+						console.log('Get response: ', JSON.stringify(data));
+					})
+					.fail(function(jqXHR, textStatus, err){
+						console.log('AJAX error response:', textStatus);
+					});
+				})();
+			}
 		}
 
 		function onSelectChange(event) {
-		    var selectButton = event.target;
-		    var i = parseInt(selectButton.dataset.id);
-			var selectedValue = selectButton.value;
+			if(event.target.classList.contains('custom-select')) {
+				var selectButton = event.target;
+			    var i = parseInt(selectButton.dataset.id);
+				var selectedValue = selectButton.value;
 
-			arrOfQuanity[i] = selectedValue;
-			render(arrOfQuanity);
-			
-		    (function post() {
-				$.ajax({
-					type: 'POST',
-					url: 'http://localhost:3000/cart/checkout/ajaxcall',
-					data: {productId: productInCart[i].productId, quanity: selectedValue},
-					dataType: 'json'
-				})
-				.done(function(data) {
-					console.log('Get response: ', JSON.stringify(data));
-				})
-				.fail(function(jqXHR, textStatus, err){
-					console.log('AJAX error response:', textStatus);
-				});
-			})();
+				arrOfQuanity[i] = selectedValue;
+				render(arrOfQuanity);
+
+			    (function post() {
+					$.ajax({
+						type: 'POST',
+						url: 'http://localhost:3000/cart/checkout/ajaxcall',
+						data: {productId: productInCart[i].productId, quanity: selectedValue},
+						dataType: 'json'
+					})
+					.done(function(data) {
+						console.log('Get response: ', JSON.stringify(data));
+					})
+					.fail(function(jqXHR, textStatus, err){
+						console.log('AJAX error response:', textStatus);
+					});
+				})();
+			}
 		}
