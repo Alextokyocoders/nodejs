@@ -45,5 +45,5 @@ module.exports.get = async function(req, res) {
     product: product
   });
   
-  app.locals.localProductId = id;
+  // app.locals.localProductId = id;
 };
