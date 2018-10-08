@@ -107,15 +107,24 @@ block js
 		quanity.addEventListener('click', onClose);
 
 
+		function cuteHide(el) {
+			el.animate({opacity: '0'}, 220, function(){
+				el.animate({height: '0px'}, 220, function(){
+					el.remove();
+				});
+			});
+		}
+
 		function onClose(event) {
 			if(event.target.classList.contains('close-button')) {
 				var selectButton = event.target ;
 				var i = parseInt(selectButton.dataset.close);
-				console.log(i);
+
 				var productId = productInCart[i].productId;
 				var quanityOfProductDel = $(`.custom-select[data-id= ${i}]`)[0].value;
 
-				$(".close-button[data-close='" + i + "']").parents('.card').remove();
+				var card = $(".close-button[data-close='" + i + "']").parents('.card');
+				cuteHide(card);
 
 				productInCart[i] = null;
 				arrOfQuanity[i] = 0;
@@ -137,8 +146,6 @@ block js
 						console.log('AJAX error response:', textStatus);
 					});
 				})();
-
-
 			}
 		}
 
