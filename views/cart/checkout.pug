@@ -34,7 +34,7 @@ block content
 							div.d-flex
 								.price.mt-1
 									small.total-price-per-item(data-price= index) $#{numberWithCommas(product.price)}
-								select.custom-select.custom-select-sm.ml-3(style="width: 60px;")(data-id= index)
+								select.custom-select.custom-select-sm.ml-3(style="width: 60px;" data-id= index)
 									option(selected='1') 1
 									option(value='2') 2
 									option(value='3') 3
@@ -47,8 +47,8 @@ block content
 									option(value='10') 10
 
 
-						button(style="height: 10px;").close(type='button', aria-label='Close')
-							span(aria-hidden='true')(data-close= index).close-button ×
+						button.close(style="height: 10px;" type='button', aria-label='Close')
+							span(aria-hidden='true' data-close= index).close-button ×
 
 
 
@@ -72,7 +72,7 @@ block content
 					.d-flex.justify-content-between.p-2
 						div Total
 						strong#include-shipprice $#{numberWithCommas(totalPrices*102/100)}
-					a(href="/auth/login").btn.btn-dark.px-5.py-2.mt-3.font-weight-bold.mr-2.w-100 Go to checkout
+					a(href="/payment").btn.btn-dark.px-5.py-2.mt-3.font-weight-bold.mr-2.w-100 Go to checkout
 
 block js
 	script.
@@ -130,7 +130,6 @@ block js
 				arrOfQuanity[i] = 0;
 				//- arrOfQuanity.splice(i, 1);
 				render(arrOfQuanity);
-
 
 				(function post() {
 					$.ajax({

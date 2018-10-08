@@ -4,6 +4,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var mongoose = require('mongoose');
+mongoose.set('useFindAndModify', false);
 
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true });
 
@@ -11,6 +12,7 @@ var usersRoute = require('./routes/user.route');
 var authRoute = require('./routes/auth.route');
 var productsRoute = require('./routes/products.route');
 var cartRoute = require('./routes/cart.route');
+var paymentRoute = require('./routes/payment.route');
 
 var authMiddleware = require('./middlewares/auth.middlewares');
 var sessionMiddleware = require('./middlewares/session.middleware');
@@ -40,6 +42,7 @@ app.use('/users', authMiddleware.requireAuth, usersRoute);
 app.use('/auth', authRoute);
 app.use('/products', productsRoute);
 app.use('/cart', cartRoute);
+app.use('/payment', authMiddleware.requireAuth, paymentRoute);
 
 app.listen(port, function () {
   console.log('Server listening on port', + port);

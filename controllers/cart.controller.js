@@ -14,7 +14,7 @@ module.exports.add = async function(req, res, next) {
   var product = await Product.findById(productId);
 
   // add product with productId
-  Session.findByIdAndUpdate(sessionId, { $inc: { totalProduct: 1 } }, {new: true }, function(err, doc) {
+  Session.findOneAndUpdate({ _id: sessionId }, { $inc: { totalProduct: 1 } }, {new: true }, function(err, doc) {
     for (let i = 0; i < doc.cart.length; i++) {
       if (doc.cart[i].productId == productId) {
         doc.cart[i].quanity += 1;
@@ -71,7 +71,7 @@ module.exports.delete = async function(req, res) {
   var productId = req.body.productId;
   var quanity = req.body.quanity;
   
-  var doc = await Session.findByIdAndUpdate(sessionId, {$pull: {'cart' : {'productId': productId}}});
+  var doc = await Session.findOneAndUpdate({ _id: sessionId }, {$pull: {'cart' : {'productId': productId}}});
   doc.totalProduct = doc.totalProduct - quanity;
   doc.save();
 }

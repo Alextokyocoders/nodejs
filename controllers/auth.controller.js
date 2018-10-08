@@ -36,5 +36,9 @@ module.exports.postLogin = function(req, res) {
   res.cookie('userId', user.id, {
     signed: true
   });
-  res.redirect('/users');
+
+  if (req.headers.referer === "http://localhost:3000/cart/checkout") {
+    res.redirect('/payment');
+  }
+  res.redirect('/');
 };  
