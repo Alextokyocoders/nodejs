@@ -72,7 +72,7 @@ block content
 					.d-flex.justify-content-between.p-2
 						div Total
 						strong#include-shipprice $#{numberWithCommas(totalPrices*102/100)}
-					a(href="/payment").btn.btn-dark.px-5.py-2.mt-3.font-weight-bold.mr-2.w-100 Go to checkout
+					a(href="http://localhost:3000/payment").btn.btn-dark.px-5.py-2.mt-3.font-weight-bold.mr-2.w-100 Go to checkout
 
 block js
 	script.
@@ -114,6 +114,8 @@ block js
 				});
 			});
 		}
+		
+
 
 		function onClose(event) {
 			if(event.target.classList.contains('close-button')) {

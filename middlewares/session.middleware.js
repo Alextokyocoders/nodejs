@@ -16,6 +16,7 @@ module.exports = async function(req, res, next) {
 
   var session = await Session.findById(sessionId);
   res.locals.countItem = session.totalProduct ? session.totalProduct : 0;
-  
+  res.locals.delivery = req.signedCookies.deliveryId ? req.signedCookies.deliveryId : 0;
+  // res.locals.user = user;
   next();
 };

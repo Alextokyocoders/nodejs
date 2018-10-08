@@ -6,4 +6,6 @@ var router = express.Router();
 
 router.get('/', controller.payment);
 
+router.get('/delivery', controller.delivery);
+
 module.exports = router;

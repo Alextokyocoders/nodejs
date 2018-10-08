@@ -1,0 +1,24 @@
+extends ../layouts/common
+
+block styles
+    link(rel="stylesheet", href="/styles/delivery.css")
+block content
+    .checkout-wrap
+      ul.checkout-bar
+        li.visited.first
+          a(href='#') Login
+        li.previous.visited Shipping & Billing
+        li.active Arrived at USPS facility
+        li.next Out for delivery
+        li Complete
+    .status-wrap
+
+      | Your item arrived at our USPS facility in USA on November 8, 2018 at 10:45 pm. The item is currently in transit to the destination.
+      .status.code
+        | Here is your tracking code: 
+        a(href='#') 154367924
+block js
+  script.
+    setTimeout(function () {
+    window.location = "http://localhost:3000";
+    }, 4000)

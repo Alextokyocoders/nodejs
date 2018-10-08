@@ -1,3 +1,51 @@
 extends ./layouts/common
-
+block styles
+    link(rel="stylesheet", href="/styles/home.css")
 block content
+    .container
+      input#i1(type='radio', name='images', checked='')
+      input#i2(type='radio', name='images')
+      input#i3(type='radio', name='images')
+      input#i4(type='radio', name='images')
+      #one.slide_img
+        img(src='http://www.bhmpics.com/wallpapers/little_pony_art-800x480.jpg')
+        label.prev(for='i4')
+          span
+        label.next(for='i2')
+          span
+      #two.slide_img
+        img(src='https://preview.ibb.co/e5OShF/cropped_800_480_111290.jpg ')
+        label.prev(for='i1')
+          span
+        label.next(for='i3')
+          span
+      #three.slide_img
+        img(src='http://wallpaperswide.com/download/up_house-wallpaper-1280x800.jpg')
+        label.prev(for='i2')
+          span
+        label.next(for='i4')
+          span
+      #four.slide_img
+        img(src='http://www.wallpapereast.com/static/images/toys-wallpaper-hd-16339-17046-hd-wallpapers.jpg')
+        label.prev(for='i3')
+          span
+        label.next(for='i1')
+          span
+      #nav_slide
+        label#dot1.dots(for='i1')
+        label#dot2.dots(for='i2')
+        label#dot3.dots(for='i3')
+        label#dot4.dots(for='i4')
+
+block js
+    script.
+        onload  = start;
+
+        function start(){   
+        var i = 1;
+        function Move(){    
+            i = (i%4)+1; // 4 is the Number of image in slider
+            document.getElementById('i'+i).checked = true;
+        }
+        setInterval(Move,3000); //change img in 3 sec
+        }

@@ -5,7 +5,7 @@ block styles
 
 
 block content
-
+  - const numberWithCommas = (x) =>  x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   .container-custom
     .row.justify-content-center
       .product.col-md-6.col-lg-4     
@@ -14,7 +14,7 @@ block content
             img.avatar(src=product.image, alt='')
 
       .product.col-md-6.col-lg-4     
-          h2= product.name
+          h2= product.title
           i.far.fa-star.mr-2.mb-3.text-warning
           i.far.fa-star.mr-2.mb-3.text-warning
           i.far.fa-star.mr-2.mb-3.text-warning
@@ -22,10 +22,10 @@ block content
           i.far.fa-star.mr-2.mb-3.text-warning
           .price
             h4.d-inline.mr-3
-              strong $519.00
+              strong $#{numberWithCommas(product.price)}
             h4.d-inline
               s
-                small $600.00
+                small $#{numberWithCommas(product.price*120/100)}
           hr
           p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus a ab inventore numquam eveniet exercitationem asperiores ex quibusdam deserunt cum corrupti, repudiandae sed, culpa quo explicabo vitae accusantium. Unde nisi iusto vero id vitae esse praesentium tenetur aliquid minima! Earum!
           p Availability: 

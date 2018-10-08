@@ -22,13 +22,22 @@ html
                     li(class="nav-item")
                         a(class="nav-link" href="/users") Users
                 if user    
-                    span(class="navbar-text").pr-3= user.name
+                    span(class="navbar-text").pr-3 Hi, #{user.name}
                 span.nav-text.total
-                    a(href="http://localhost:3000/cart/checkout")
-                        i.fas.fa-shopping-cart.pr-2(style="font-size: 1.8rem;")
-                    .total-product.d-inline.badge.badge-secondary.badge-pill.badge-danger.btn-circle(style="position: relative; top: -1rem; left: -1rem" )
-                        =countItem
-                    
+                    if !delivery
+                        a(href="http://localhost:3000/cart/checkout")
+                            i.fas.fa-shopping-cart.pr-2(style="font-size: 1.8rem;")
+                        .total-product.d-inline.badge.badge-secondary.badge-pill.badge-danger.btn-circle(style="position: relative; top: -1rem; left: -1rem" )
+                            =countItem
+                    else
+                        a(href="http://localhost:3000/cart/checkout")
+                            i.fas.fa-shopping-cart.pr-2(style="font-size: 1.8rem;")
+                                               
+                        a(href="http://localhost:3000/payment/delivery")
+                            i.fas.fa-plane-departure.pr-2(style="font-size: 1.8rem;")
+                        .total-product.d-inline.badge.badge-secondary.badge-pill.badge-danger.btn-circle(style="position: relative; top: -1rem; left: -1rem" )
+                            =countItem 
+
         .container.pt-5
             block content
         block js

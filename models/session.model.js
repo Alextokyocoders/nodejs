@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 
+
 var sessionSchema = new mongoose.Schema({
   totalProduct: Number,
   cart: [
@@ -13,6 +14,7 @@ var sessionSchema = new mongoose.Schema({
       quanity: Number
     }
   ]
+  // delivery: [cart]
 });
 
 var Session = mongoose.model('Session', sessionSchema, 'sessions');

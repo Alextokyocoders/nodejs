@@ -109,7 +109,7 @@ block content
                         input#cc-cvv.form-control(type='text', placeholder='', required='')
                         .invalid-feedback Security code required
                 hr.mb-4
-                button.btn.btn-primary.btn-lg.btn-block(type='submit') Continue to checkout
+                a.btn.btn-primary.btn-lg.btn-block(type='submit' href="http://localhost:3000/payment/delivery") Continue to checkout
     footer.my-5.pt-5.text-muted.text-center.text-small
 
 block js
@@ -135,3 +135,26 @@ block js
         });
         }, false);
         })();
+
+        const numberWithCommas = (x) =>  x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        var countItem = "#{countItem}";
+        var productInCart = !{JSON.stringify(productInCart)};
+        var arrOfQuanity = [...productInCart.map(item => item.quanity)];
+
+        function render(arrOfQuanity) {
+            var arrOfPrice = [];
+
+            for (let i = 0; i < productInCart.length; i++) {
+                if (productInCart[i]) {
+                    arrOfPrice.push(productInCart[i].price * arrOfQuanity[i]);
+                }
+            }
+            var totalPrices = arrOfPrice.reduce((a, b) => a + b, 0);
+
+            $('#total-pug')[0].innerHTML = '$' + numberWithCommas(totalPrices);
+            $('#shipping-pug')[0].innerHTML = '$' + numberWithCommas(totalPrices*2/100);
+            $('#include-shipprice')[0].innerHTML = '$' + numberWithCommas(totalPrices*102/100);
+            $(".total-product.d-inline")[0].innerHTML = arrOfQuanity.reduce((a, b) => parseInt(a) + parseInt(b), 0);
+        }
+
+        render(arrOfQuanity);
