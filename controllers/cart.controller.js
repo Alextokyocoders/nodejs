@@ -1,4 +1,4 @@
-var db = require('../db');
+
 var Product = require('../models/product.model');
 var Session = require('../models/session.model');
 

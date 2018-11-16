@@ -1,5 +1,5 @@
 var md5 = require('md5');
-var db = require('../db');
+
 var Product = require('../models/product.model');
 var Session = require('../models/session.model');
 
